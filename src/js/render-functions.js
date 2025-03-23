@@ -8,8 +8,6 @@ let lightbox = null;
 export function populateGallery(pixabays = []) {
   const imagesContainer = document.querySelector('.gallery');
 
-  imagesContainer.innerHTML = '';
-
   const galleryHTML = pixabays
     .map(image => {
       return `
@@ -38,7 +36,7 @@ export function populateGallery(pixabays = []) {
     })
     .join('');
 
-  imagesContainer.innerHTML = galleryHTML;
+  imagesContainer.insertAdjacentHTML('beforeend', galleryHTML);
 
   if (!lightbox) {
     lightbox = new SimpleLightbox('.gallery a');

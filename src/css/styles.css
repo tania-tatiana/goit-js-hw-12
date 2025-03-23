@@ -46,7 +46,8 @@
   justify-content: center;
   gap: 8px;
 }
-
+.form {
+}
 .form-label {
 }
 .form-input {
@@ -92,6 +93,7 @@
   flex-flow: wrap;
   gap: 24px;
   justify-content: center;
+  margin-bottom: 32px;
 }
 .card-container {
   max-width: 320px;
@@ -99,7 +101,7 @@
 }
 .card {
   max-width: 360px;
-  height: 200px;
+  height: 248px;
   margin-bottom: 24px;
 }
 .card-image {
@@ -134,4 +136,29 @@ p {
   line-height: 200%;
   letter-spacing: 0.04em;
   color: #2e2f42;
+}
+.add-posts-button {
+  margin: 0 auto;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+
+  background-color: #4e75ff;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.add-posts-button:hover {
+  background-color: #6c8cff;
 }
