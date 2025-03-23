@@ -23,7 +23,7 @@ const pixabayRefs = {
 
 pixabayRefs.form.addEventListener('submit', async event => {
   event.preventDefault();
-  const searchQuery = pixabayRefs.searchQueryInput.value.trim();
+  searchQuery = pixabayRefs.searchQueryInput.value.trim();
   currentPage = 1;
   const container = document.querySelector('.gallery');
   container.innerHTML = '';
@@ -47,6 +47,21 @@ pixabayRefs.form.addEventListener('submit', async event => {
     const response = await fetchPixabay(searchQuery);
     const totalPages = Math.ceil(response.totalHits / PAGE_SIZE);
 
+    if (response.hits.length === 0) {
+      iziToast.error({
+        messageColor: '#FAFAFB',
+        iconUrl: './img/bi_x-octagon.svg',
+        iconColor: 'white',
+        message:
+          'Sorry, there are no images matching</br> your search query. Please, try again!',
+        position: 'topRight',
+        backgroundColor: '#ef4040',
+        color: '#fafafb',
+      });
+      pixabayRefs.buttomLoadMore.style.display = 'none';
+      return;
+    }
+
     if (totalPages > currentPage) {
       pixabayRefs.buttomLoadMore.style.display = 'flex';
     } else {
@@ -63,10 +78,6 @@ pixabayRefs.form.addEventListener('submit', async event => {
       });
     }
 
-    if (response.hits.length === 0) {
-      // Якщо зображень немає, генеруємо помилку
-      throw new Error('No images found for this query');
-    }
     populateGallery(response.hits);
     console.log(response);
   } catch (error) {
@@ -87,7 +98,7 @@ pixabayRefs.form.addEventListener('submit', async event => {
 
 pixabayRefs.buttomLoadMore.addEventListener('click', async event => {
   event.preventDefault();
-  const searchQuery = pixabayRefs.searchQueryInput.value.trim();
+  searchQuery = pixabayRefs.searchQueryInput.value.trim();
   currentPage++;
 
   try {
@@ -107,10 +118,7 @@ pixabayRefs.buttomLoadMore.addEventListener('click', async event => {
 
     pixabayRefs.buttomLoadMore.style.display = 'flex';
 
-    if (
-      response.hits > PAGE_SIZE ||
-      Math.ceil(response.totalHits / PAGE_SIZE) > currentPage
-    ) {
+    if (Math.ceil(response.totalHits / PAGE_SIZE) > currentPage) {
       pixabayRefs.buttomLoadMore.style.display = 'flex';
     } else {
       pixabayRefs.buttomLoadMore.style.display = 'none';
